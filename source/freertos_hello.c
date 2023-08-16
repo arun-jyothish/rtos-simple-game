@@ -19,6 +19,10 @@
 #include "clock_config.h"
 #include "board.h"
 
+/*jyothu includes*/
+#include "jyo_file.h"
+
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -42,6 +46,9 @@ int main(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
+/*    -------------------------------------*/
+    led_init();						// initialized red, blue, green leds
+/*    -------------------------------------*/
     if (xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY, NULL) !=
         pdPASS)
     {
@@ -62,6 +69,7 @@ static void hello_task(void *pvParameters)
     for (;;)
     {
         PRINTF("Hello world.\r\n");
+        light_led(red, false);
         vTaskSuspend(NULL);
     }
 }
