@@ -48,6 +48,32 @@ int main(void)
     BOARD_InitDebugConsole();
 /*    -------------------------------------*/
     led_init();						// initialized red, blue, green leds
+#define RAND_MAX 10
+	srand(time(NULL));
+
+	//    --------------------------------------------------------------------------------
+
+	int max = 500, min = 5;
+		while (1){
+		int rn = rand() % max;
+		if (rn < min && rn > 0){
+	        light_led(blue, true);
+	        light_led(green, false);
+	        PRINTF(" red.\r\n");
+		}
+		else if (rn < max && rn > max-min){
+
+	        light_led(green, true);
+	        light_led(blue, false);
+	        PRINTF(" blue.\r\n");
+		}
+		else{
+	        light_led(blue, false);
+	        light_led(green, false);
+		}
+		}
+	//	-----------------------------------------------------------------------------------
+
 /*    -------------------------------------*/
     if (xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY, NULL) !=
         pdPASS)
@@ -56,7 +82,9 @@ int main(void)
         while (1)
             ;
     }
+
     vTaskStartScheduler();
+
     for (;;)
         ;
 }
@@ -72,4 +100,21 @@ static void hello_task(void *pvParameters)
         light_led(red, false);
         vTaskSuspend(NULL);
     }
+}
+
+void led_task (){
+	while (1){
+	int rn = rand() % 20;
+	if (rn < 5 && rn > 0){
+        light_led(blue, true);
+	}
+	else if (rn < 20 && rn > 14){
+
+        light_led(green, true);
+	}
+	vTaskDelay(150);
+    light_led(green, false);
+    light_led(blue, false);
+	vTaskDelay(150);
+	}
 }

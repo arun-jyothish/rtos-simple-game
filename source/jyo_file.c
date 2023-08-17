@@ -10,6 +10,8 @@
 #include "fsl_port.h"
 #include "MK64F12.h"
 #include <stdint.h>
+#include <time.h>
+
 
 
 void led_init() {
@@ -51,4 +53,6 @@ void light_led( jLEDs led , int state){
 		GPIO_PinWrite(green_led_base, green_led_pin, !state);
 	}
 }
+
+
 
