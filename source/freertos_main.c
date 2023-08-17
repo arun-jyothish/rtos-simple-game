@@ -40,6 +40,9 @@ static void hello_task(void *pvParameters);
 /*!
  * @brief Application entry point.
  */
+
+static void redL();
+static void greenL();
 int main(void)
 {
     /* Init board hardware. */
@@ -52,7 +55,7 @@ int main(void)
 	srand(time(NULL));
 
 	//    --------------------------------------------------------------------------------
-
+/*
 	int max = 500, min = 5;
 		while (1){
 		int rn = rand() % max;
@@ -71,7 +74,7 @@ int main(void)
 	        light_led(blue, false);
 	        light_led(green, false);
 		}
-		}
+		}*/
 	//	-----------------------------------------------------------------------------------
 
 /*    -------------------------------------*/
@@ -79,9 +82,21 @@ int main(void)
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
-        while (1)
-            ;
+        while (1) ;
     }
+    if (xTaskCreate(redL, "blue_led", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY-3, NULL) !=
+          pdPASS)
+      {
+          PRINTF("blue_led!.\r\n");
+          while (1) ;
+      }
+
+    if (xTaskCreate(greenL, "green_led", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY-1, NULL) !=
+          pdPASS)
+      {
+          PRINTF("green_led!.\r\n");
+          while (1) ;
+      }
 
     vTaskStartScheduler();
 
@@ -101,15 +116,20 @@ static void hello_task(void *pvParameters)
         vTaskSuspend(NULL);
     }
 }
-
-void led_task (){
-	while (1){
+static void greenL(){
+	light_led(green,true);
+	vTaskDelay(1);
+}
+static void redL(){
+	light_led(red,true);
+}
+/*void led_task1 (){
+	while (1){ 
 	int rn = rand() % 20;
 	if (rn < 5 && rn > 0){
         light_led(blue, true);
 	}
 	else if (rn < 20 && rn > 14){
-
         light_led(green, true);
 	}
 	vTaskDelay(150);
@@ -117,4 +137,4 @@ void led_task (){
     light_led(blue, false);
 	vTaskDelay(150);
 	}
-}
+}*/
