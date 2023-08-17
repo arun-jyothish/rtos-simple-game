@@ -45,10 +45,10 @@ void light_led( jLEDs led , int state){
 		GPIO_PinWrite(red_led_base, red_led_pin, !state);
 		break;
 	case blue:
-		GPIO_PinWrite(blue_led_base, red_led_pin, !state);
+		GPIO_PinWrite(blue_led_base, blue_led_pin, !state);
 		break;
 	case green:
-		GPIO_PinWrite(green_led_base, red_led_pin, !state);
+		GPIO_PinWrite(green_led_base, green_led_pin, !state);
 	}
 }
 
