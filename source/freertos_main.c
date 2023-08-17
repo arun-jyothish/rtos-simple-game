@@ -54,6 +54,11 @@ int main(void)
 #define RAND_MAX 10
 	srand(time(NULL));
 
+/*	while(1){
+		redL();
+		greenL();
+	}*/
+
 	//    --------------------------------------------------------------------------------
 /*
 	int max = 500, min = 5;
@@ -78,25 +83,26 @@ int main(void)
 	//	-----------------------------------------------------------------------------------
 
 /*    -------------------------------------*/
-    if (xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY, NULL) !=
+    if (xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY-2, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1) ;
     }
-    if (xTaskCreate(redL, "blue_led", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY-3, NULL) !=
+    if (xTaskCreate(redL, "red_led", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY-1, NULL) !=
           pdPASS)
       {
-          PRINTF("blue_led!.\r\n");
+          PRINTF("red_led!.\r\n");
           while (1) ;
       }
-
     if (xTaskCreate(greenL, "green_led", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY-1, NULL) !=
           pdPASS)
       {
           PRINTF("green_led!.\r\n");
           while (1) ;
       }
+
+
 
     vTaskStartScheduler();
 
@@ -117,11 +123,13 @@ static void hello_task(void *pvParameters)
     }
 }
 static void greenL(){
-	light_led(green,true);
-	vTaskDelay(1);
+	while(1)
+		light_led(green,true);
+//	vTaskDelay(1);
 }
 static void redL(){
-	light_led(red,true);
+	while(1)
+		light_led(red,true);
 }
 /*void led_task1 (){
 	while (1){ 
