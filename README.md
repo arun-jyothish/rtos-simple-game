@@ -18,3 +18,13 @@
 + create design document
 + implement design in MCU express
 + verify implementation
+
+## Unit Test
+
+* increment delay for testing
+
+### case 1:
++ Two players press switches when corresponding colours on (say 3 times), then press switch off
+	inference:
+		wrong press stops game and print score.
+		score is tested for each person, score will be incremented for right press( for 3 presses ).
